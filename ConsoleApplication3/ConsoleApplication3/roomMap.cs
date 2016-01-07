@@ -3,7 +3,7 @@ namespace ConsoleApplication3
 {
     internal class roomMap
     {
-        private room startroom = new room("You are standing at the foot of a long driveway, there is a mailbox", "driveway");
+        private room startroom = new room("You are standing at the foot of a long driveway, there is a mailbox", "Driveway");
 
         public void initmap() {
             room pos = startroom;
