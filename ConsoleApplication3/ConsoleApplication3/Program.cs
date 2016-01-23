@@ -10,8 +10,17 @@ namespace ConsoleApplication3
     {
         static void Main(string[] args)
         {
-            roomMap map = new roomMap();
-            map.initmap();
+            roomMap.initmap();
+            Console.WriteLine("Welcome to Flight!\n");
+            Console.WriteLine("Please type your preferred name!\n");
+            playerChar.charname = Console.ReadLine();
+            Console.WriteLine("Hello " + playerChar.charname + "!");
+            Console.WriteLine("You are in the " + playerChar.location.name + " right now");
+            while (true)
+            {
+                inPut.getInput();
+            }
+            Console.ReadKey();
         }
     }
 }

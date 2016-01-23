@@ -1,161 +1,181 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace ConsoleApplication3
 {
     internal class roomMap
     {
-        private room startroom = new room("You are standing at the foot of a long driveway, there is a mailbox", "Driveway");
+        static public room startroom = new room("You are standing at the foot of a long driveway, there is a mailbox", "Driveway");
 
-        public void initmap() {
+        static public List<room> roomlist = new List<room>();
+
+        static public room randroom()
+        {
+            Random rand2 = new Random();
+            return roomlist[rand2.Next() % roomlist.Count];
+        }
+
+
+        static public void initmap() {
             room pos = startroom;
-            int randuse, k = 0;
-            bool repeat = true;
+            roomlist.Add(startroom);
             Direction randdir;
             Random rand1 = new Random();
-            
-            while (repeat == true)
+            KeyNotFoundException check = new KeyNotFoundException();
+
+            for (int i = 0; i < 10; i++)
             {
-                randuse = rand1.Next();
-                if(randuse % 10 == 0)
+                Console.WriteLine("Inside the for-loop, on iteration" + (i));
+                if (i == 0)
                 {
-                    while (true) {
+                    while (true)
+                    {
+                        pos = randroom();
+                        randdir = (Direction)(rand1.Next(0,3));
+                        //Console.WriteLine(randdir);
+                        if (pos.adjacentRooms[randdir] == null)
+                        {
+                            pos.addfrom("You stand in a magnificent dining room. There's some nice china in the corner.", "Dining Room", randdir);
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
+                            break;
+                        }
+                    }
+                }
+                if(i == 1)
+                {
+                    while (true)
+                    {
+                        pos = randroom();
                         randdir = (Direction)(rand1.Next() % 4);
                         if (pos.adjacentRooms[randdir] == null)
                         {
                             pos.addfrom("You are in a billiard room. Fun.", "Billiard Room", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
                             break;
                         }
                     }
                 }
-                if (randuse % 10 == 1)
+                if (i == 2)
                 {
                     while (true)
                     {
+                        pos = randroom();
                         randdir = (Direction)(rand1.Next() % 4);
                         if (pos.adjacentRooms[randdir] == null)
                         {
                             pos.addfrom("You are in a small chapel. There are some mini-pews here.", "Chapel", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
                             break;
                         }
                     }
                 }
-                if (randuse % 10 == 2)
+                if (i == 3)
                 {
                     while (true)
                     {
+                        pos = randroom();
                         randdir = (Direction)(rand1.Next() % 4);
                         if (pos.adjacentRooms[randdir] == null)
                         {
                             pos.addfrom("You are standing in a greenhouse. There are many plants around", "Greenhouse", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
                             break;
                         }
                     }
                 }
-                if (randuse % 10 == 3)
+                if (i == 4)
                 {
                     while (true)
                     {
+                        pos = randroom();
                         randdir = (Direction)(rand1.Next() % 4);
                         if (pos.adjacentRooms[randdir] == null)
                         {
                             pos.addfrom("You see a beautiful garden all around you. Lotsa flowers and topiaries.", "Garden", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
                             break;
                         }
                     }
                 }
-                if (randuse % 10 == 4)
+                if (i == 5)
                 {
                     while (true)
                     {
+                        pos = randroom();
                         randdir = (Direction)(rand1.Next() % 4);
                         if (pos.adjacentRooms[randdir] == null)
                         {
                             pos.addfrom("The entrance to a topiary maze confronts you.", "Maze", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
                             break;
                         }
                     }
                 }
-                if (randuse % 10 == 5)
+                if (i == 6)
                 {
                     while (true)
                     {
+                        pos = randroom();
                         randdir = (Direction)(rand1.Next() % 4);
                         if (pos.adjacentRooms[randdir] == null)
                         {
                             pos.addfrom("You're in a subway stat-wait, nope, it's a kitchen.", "Kitchen", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
                             break;
                         }
                     }
                 }
-                if (randuse % 10 == 6)
+                if (i == 7)
                 {
                     while (true)
                     {
-                        randdir = (Direction)(rand1.Next() % 4);
-                        if (pos.adjacentRooms[randdir] == null)
-                        {
-                            pos.addfrom("You stand in a magnificent dining room. There's some nice china in the corner.", "Dining Room", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
-                            break;
-                        }
-                    }
-                }
-                if (randuse % 10 == 7)
-                {
-                    while (true)
-                    {
+                        pos = randroom();
                         randdir = (Direction)(rand1.Next() % 4);
                         if (pos.adjacentRooms[randdir] == null)
                         {
                             pos.addfrom("You're in what looks like someone's bedroom.", "Bedroom", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
                             break;
                         }
                     }
                 }
-                if (randuse % 10 == 8)
+                if (i == 8)
                 {
                     while (true)
                     {
+                        pos = randroom();
                         randdir = (Direction)(rand1.Next() % 4);
                         if (pos.adjacentRooms[randdir] == null)
                         {
                             pos.addfrom("You are standing in the biggest linen closet you've ever seen.", "Linen Closet", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
                             break;
                         }
                     }
                 }
-                if (randuse % 10 == 9)
+                if (i == 9)
                 {
                     while (true)
                     {
+                        pos = randroom();
                         randdir = (Direction)(rand1.Next() % 4);
                         if (pos.adjacentRooms[randdir] == null)
                         {
                             pos.addfrom("Phew, you're now in a room full of garbage. Who would purposely put a room like this in their house?", "Trash Room", randdir);
-                            pos = pos.adjacentRooms[randdir];
-                            k++;
+                            roomlist.Add(pos.adjacentRooms[randdir]);
+                            pos = randroom();
                             break;
                         }
                     }
                 }
-                if(k == 9)
-                    repeat = false;
             }        
         }            
     }
