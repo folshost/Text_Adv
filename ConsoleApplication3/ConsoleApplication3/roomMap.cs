@@ -1,9 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 namespace ConsoleApplication3
 {
     internal class roomMap
     {
+
+        //static public FileStream items = new FileStream("items.dat",FileMode.Open,FileAccess.Read);
+        //static public FileStream rooms = new FileStream("rooms.dat", FileMode.Open, FileAccess.Read);
+
         static public room startroom = new room("You are standing at the foot of a long driveway, there is a mailbox", "Driveway");
 
         static public List<room> roomlist = new List<room>();
@@ -115,7 +120,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if(randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -141,7 +146,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if (randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -167,7 +172,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if (randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -193,7 +198,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if (randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -219,7 +224,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if (randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -245,7 +250,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if (randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -271,7 +276,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if (randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -297,7 +302,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if (randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -323,7 +328,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if (randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -349,7 +354,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            randItem = randRoomItem();
+                            randItem = randRoomItem(rand1);
                             if (randItem.used == false)
                             {
                                 pos.roomItemAdd(randItem);
@@ -365,10 +370,9 @@ namespace ConsoleApplication3
                     
         }
 
-        private static item randRoomItem()
+        private static item randRoomItem(Random rand1)
         {
-            Random rand3 = new Random();
-            return itemList[rand3.Next() % itemList.Count];
+            return itemList[rand1.Next() % itemList.Count];
         }
     }
 }

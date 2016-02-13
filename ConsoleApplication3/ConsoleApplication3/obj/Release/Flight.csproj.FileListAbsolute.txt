@@ -4,3 +4,9 @@ C:\Users\Maxwell\Documents\Visual Studio 2015\Projects\ConsoleApplication3\Conso
 C:\Users\Maxwell\Documents\Visual Studio 2015\Projects\ConsoleApplication3\ConsoleApplication3\obj\Release\Flight.csprojResolveAssemblyReference.cache
 C:\Users\Maxwell\Documents\Visual Studio 2015\Projects\ConsoleApplication3\ConsoleApplication3\obj\Release\ConsoleApplication3.exe
 C:\Users\Maxwell\Documents\Visual Studio 2015\Projects\ConsoleApplication3\ConsoleApplication3\obj\Release\ConsoleApplication3.pdb
+C:\Users\Maxwell\Documents\Visual Studio 2015\Projects\Text-Adv-Try-Number-3\ConsoleApplication3\ConsoleApplication3\bin\Release\ConsoleApplication3.exe.config
+C:\Users\Maxwell\Documents\Visual Studio 2015\Projects\Text-Adv-Try-Number-3\ConsoleApplication3\ConsoleApplication3\obj\Release\ConsoleApplication3.exe
+C:\Users\Maxwell\Documents\Visual Studio 2015\Projects\Text-Adv-Try-Number-3\ConsoleApplication3\ConsoleApplication3\obj\Release\ConsoleApplication3.pdb
+C:\Users\Maxwell\Documents\GitHub\Text_Adv\ConsoleApplication3\ConsoleApplication3\bin\Release\ConsoleApplication3.exe.config
+C:\Users\Maxwell\Documents\GitHub\Text_Adv\ConsoleApplication3\ConsoleApplication3\obj\Release\ConsoleApplication3.exe
+C:\Users\Maxwell\Documents\GitHub\Text_Adv\ConsoleApplication3\ConsoleApplication3\obj\Release\ConsoleApplication3.pdb

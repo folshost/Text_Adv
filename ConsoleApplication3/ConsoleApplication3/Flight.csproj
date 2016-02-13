@@ -46,6 +46,8 @@
     <Compile Include="Direction.cs" />
     <Compile Include="inPut.cs" />
     <Compile Include="item.cs" />
+    <Compile Include="outPut.cs" />
+    <Compile Include="person.cs" />
     <Compile Include="playerChar.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

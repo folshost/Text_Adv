@@ -12,6 +12,7 @@ namespace ConsoleApplication3
         internal Dictionary<Direction, room> adjacentRooms = new Dictionary<Direction, room>();
         internal List<string> descriptions = new List<string>();
         internal List<item> roomItems = new List<item>();
+        internal List<person> people = new List<person>();
 
         public room(string r, string n)
         {
@@ -27,6 +28,7 @@ namespace ConsoleApplication3
         public void roomItemAdd(item Item)
         {
             roomItems.Add(Item);
+            Item.used = true;
             itemNum++;
         }
 

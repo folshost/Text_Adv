@@ -28,6 +28,7 @@ namespace ConsoleApplication3
         public static string getInput()
         {
             string input = Console.ReadLine();
+            Console.WriteLine("");
             input = input.ToUpper();
             if (input == "LOOK")
             {
@@ -103,6 +104,22 @@ namespace ConsoleApplication3
                 }
                 return input; */
             }
+            else if(input.Contains("TAKE") || input.Contains("GET"))
+            {
+                playerChar.pickUp(input);
+                return input;
+            }
+            else if(input.Contains("INVENTORY") || input.Contains("INV"))
+            {
+                playerChar.lookInv();
+                return input;
+            }
+            else if (input.Contains("SAVE"))
+            {
+                //outPut.write();
+                return input;
+            }
+           
 
             else return input;
         }
