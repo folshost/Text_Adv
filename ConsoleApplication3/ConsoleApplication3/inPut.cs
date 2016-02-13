@@ -13,31 +13,52 @@ namespace ConsoleApplication3
         public static string simpleInput()
         {
             string input = Console.ReadLine();
-            input.ToUpper();
+            input = input.ToUpper();
             if (input == "HELP")
             {
-                help();
+                inPut.help();
                 return "";
             }
             else return input;
         }
 
+        
+
+
         public static string getInput()
         {
             string input = Console.ReadLine();
-            if (input == "look")
+            input = input.ToUpper();
+            if (input == "LOOK")
             {
                 playerChar.look();
                 return input;
             }
-            else if(input == "go")
+            else if (input == "HELP")
             {
+                help();
+                return input;
+            }
+            else if (input.Contains("GO"))
+            {
+                if (input.Contains("E") && playerChar.canGo((Direction)1))
+                    playerChar.move((Direction)1);
+                else if (input.Contains("N") && playerChar.canGo((Direction)0))
+                    playerChar.move((Direction)0);
+                else if (input.Contains("S") && playerChar.canGo((Direction)2))
+                    playerChar.move((Direction)2);
+                else if (input.Contains("W") && playerChar.canGo((Direction)3))
+                    playerChar.move((Direction)3);
+                return input;
+
+
+                /*
                 Console.WriteLine("Where would you like to go?\n");
                 int repeat = 0;
                 while (true)
                 {
                     string input2 = simpleInput();
-                    input2.ToUpper();
+                    input2 = input2.ToUpper();
                     if ( input2 == "EAST" || input2 == "E")
                     {
                         Console.WriteLine(playerChar.canGo((Direction)1));
@@ -78,9 +99,9 @@ namespace ConsoleApplication3
                     }
                     repeat++;
                     if (repeat >= 3)
-                        Console.WriteLine("If you don't know how to proceed, type help");
+                        Console.WriteLine("If you don't know how to proceed, type help"); 
                 }
-                return input;
+                return input; */
             }
 
             else return input;

@@ -22,8 +22,21 @@ namespace ConsoleApplication3
 
         static public void look()
         {
-            Console.WriteLine(location.description+ '\n');
-            for(int i =0;i<4;i++)
+            Console.WriteLine(location.descriptions[location.descripInd]);
+            Console.WriteLine(location.roomItems[0] + "  " + location.roomItems[1]);
+            for (int i = 0; i < location.itemNum; i++)
+            { 
+                if (location.roomItems[i].itemLoc == 0)
+                    Console.WriteLine("There is a " + location.roomItems[i].itemName + " along the wall here");
+                else if (location.roomItems[i].itemLoc == 1)
+                    Console.WriteLine("There is a" + location.roomItems[i].itemName + " on the ceiling here");
+                else if (location.roomItems[i].itemLoc == 2)
+                    Console.WriteLine("There is a" + location.roomItems[i].itemName + " set in the floor here");
+                else if (location.roomItems[i].itemLoc == 3)
+                    Console.WriteLine("There is a" + location.roomItems[i].itemName + " in the middle of the floor here");
+            }
+          
+            for (int i =0;i<4;i++)
             {
                 if(location.adjacentRooms[(Direction)i] != null)
                     Console.WriteLine("There is a " + location.adjacentRooms[(Direction)i].name + " to the " + (Direction)i + " here." );

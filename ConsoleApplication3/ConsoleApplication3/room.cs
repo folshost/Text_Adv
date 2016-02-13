@@ -5,22 +5,29 @@ namespace ConsoleApplication3
 {
     internal class room
     {
-        public static string description0 = "It is dark. You are likely to be eaten by a grue";
+        public static string description_0 = "It is dark. You are likely to be eaten by a grue";
         public string name;
-        public string description;
+        public int descripInd = 0;
+        public int itemNum = 0;
         internal Dictionary<Direction, room> adjacentRooms = new Dictionary<Direction, room>();
-
-
+        internal List<string> descriptions = new List<string>();
+        internal List<item> roomItems = new List<item>();
 
         public room(string r, string n)
         {
             name = n;
-            description = r;
+            descriptions.Add(r);
             adjacentRooms[(Direction)0] = null;
             adjacentRooms[(Direction)1] = null;
             adjacentRooms[(Direction)2] = null;
             adjacentRooms[(Direction)3] = null;
 
+        }
+
+        public void roomItemAdd(item Item)
+        {
+            roomItems.Add(Item);
+            itemNum++;
         }
 
         public room() {

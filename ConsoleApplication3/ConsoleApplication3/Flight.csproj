@@ -50,6 +50,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="room.cs" />
+    <Compile Include="RoomLocation.cs" />
     <Compile Include="roomMap.cs" />
   </ItemGroup>
   <ItemGroup>
