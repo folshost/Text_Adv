@@ -14,7 +14,9 @@ namespace ConsoleApplication3
             roomMap.initmap();
             
             Console.WriteLine("Welcome to Flight!\n");
-            if (outPut.findSaves() == 0)
+
+            int savesnum = saves.findSaves();
+            if (savesnum == 0)
             {
                 Console.WriteLine("There were no save files detected. \nStart New game?");
                 while (true)
@@ -26,14 +28,53 @@ namespace ConsoleApplication3
                         return;
                     }
                     else if (input.ToUpper() == "YES" || input.ToUpper() == "Y")
+                    {
+                        Console.WriteLine("Please type your preferred name!\n");
+                        playerChar.charname = Console.ReadLine();
+                        Console.WriteLine("Hello " + playerChar.charname + "!");
+                        playerChar.location = roomMap.startroom;
+                        Console.WriteLine("You are in the " + playerChar.location.name + " right now");
                         break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("That input was not intelligible, please use either a 'y' or 'n'");
+                    }
                 }    
             }
+            else if(savesnum > 0)
+            {
+                if(savesnum == 1)
+                {
+                    Console.WriteLine("One save file was detected \n\nPlease select the index of the one you would like to use!");
 
-            Console.WriteLine("Please type your preferred name!\n");
-            playerChar.charname = Console.ReadLine();
-            Console.WriteLine("Hello " + playerChar.charname + "!");
-            Console.WriteLine("You are in the " + playerChar.location.name + " right now");
+                }
+                else{
+                    Console.WriteLine("There were " + savesnum + "  saves found\n\nPlease select the index of the one you would like to use!");
+
+                }
+                List<string> savesUse = saves.savesurvey();
+                int saveNumIndex;
+                while (true)
+                {
+                    for (int i = 0; i < savesUse.Count; i++)
+                    {
+                        Console.WriteLine("Save Index: " + i + "\nCharacter Name: " + savesUse[i] + "\nLocation: \n");
+                    }
+                    string saveIndex = inPut.getInput();
+                    int.TryParse(saveIndex, out saveNumIndex);
+                    if (saveNumIndex >= 0 && saveNumIndex < savesUse.Count)
+                    {
+                        break;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("That was not a valid input\nPlease put in a valid save index, or type exit");
+                    }
+                }
+            }
+            
             while (true)
             {
                 inPut.getInput();
@@ -47,5 +88,9 @@ namespace ConsoleApplication3
             }
             //Console.ReadKey();
         }
+
+
+
+
     }
 }

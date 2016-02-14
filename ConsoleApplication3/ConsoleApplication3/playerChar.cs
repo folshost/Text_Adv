@@ -4,7 +4,7 @@ namespace ConsoleApplication3
 {
     internal class playerChar
     {
-        static public room location = roomMap.startroom;
+        static public room location = null;
         static public string charname;
         static public List<item> inventory = new List<item>();
 
@@ -16,6 +16,11 @@ namespace ConsoleApplication3
 
         static public bool canGo(Direction D)
         {
+            if (location == null)
+            {
+                Console.WriteLine("Please do not try to access player stats when the player has not been initialized");
+                return false;
+            }
             if (location.adjacentRooms[D] != null)
                 return true;
             else return false;
@@ -23,6 +28,11 @@ namespace ConsoleApplication3
 
         static public void lookInv()
         {
+            if (location == null)
+            {
+                Console.WriteLine("Please do not try to access player stats when the player has not been initialized");
+                return;
+            }
             Console.WriteLine("You have: \n");
             for (int i = 0; i < inventory.Count; i++)
                 Console.WriteLine(" \t A " + inventory[i].itemName);
@@ -30,7 +40,12 @@ namespace ConsoleApplication3
 
         static public void pickUp(string itemName)
         {
-            for(int i = 0; i< location.roomItems.Count; i++)
+            if(location == null)
+            {
+                Console.WriteLine("Please do not try to access player stats when the player has not been initialized");
+                return;
+            }
+            for (int i = 0; i< location.roomItems.Count; i++)
             {
                 if(itemName.Contains(location.roomItems[i].itemName.ToUpper()))
                 {
@@ -47,6 +62,11 @@ namespace ConsoleApplication3
 
         static public void look()
         {
+            if (location == null)
+            {
+                Console.WriteLine("Please do not try to access player stats when the player has not been initialized");
+                return;
+            }
             Console.WriteLine(location.descriptions[location.descripInd] + "\n");
 
 

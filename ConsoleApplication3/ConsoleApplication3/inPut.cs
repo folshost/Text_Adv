@@ -116,7 +116,12 @@ namespace ConsoleApplication3
             }
             else if (input.Contains("SAVE"))
             {
-                //outPut.write();
+                saves.save();
+                return input;
+            }
+            else if(input.Contains("EXIT"))
+            {
+                Environment.Exit(0);
                 return input;
             }
            
