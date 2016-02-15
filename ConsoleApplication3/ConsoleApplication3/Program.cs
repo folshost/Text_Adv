@@ -10,8 +10,6 @@ namespace ConsoleApplication3
     {
         static void Main(string[] args)
         {
-            roomMap.initItems();
-            roomMap.initmap();
             
             Console.WriteLine("Welcome to Flight!\n");
 
@@ -29,11 +27,7 @@ namespace ConsoleApplication3
                     }
                     else if (input.ToUpper() == "YES" || input.ToUpper() == "Y")
                     {
-                        Console.WriteLine("Please type your preferred name!\n");
-                        playerChar.charname = Console.ReadLine();
-                        Console.WriteLine("Hello " + playerChar.charname + "!");
-                        playerChar.location = roomMap.startroom;
-                        Console.WriteLine("You are in the " + playerChar.location.name + " right now");
+                        newGame();
                         break;
                     }
                     else
@@ -46,11 +40,11 @@ namespace ConsoleApplication3
             {
                 if(savesnum == 1)
                 {
-                    Console.WriteLine("One save file was detected \n\nPlease select the index of the one you would like to use!");
+                    Console.WriteLine("One save file was detected \n\nPlease select the index of the one you would like to use!\nOr, if you would like to start a new game type 'new game'");
 
                 }
                 else{
-                    Console.WriteLine("There were " + savesnum + "  saves found\n\nPlease select the index of the one you would like to use!");
+                    Console.WriteLine("There were " + savesnum + "  saves found\n\nPlease select the index of the one you would like to use!\nOr, if you would like to start a new game type 'new game'");
 
                 }
                 List<string> savesUse = saves.savesurvey();
@@ -62,6 +56,12 @@ namespace ConsoleApplication3
                         Console.WriteLine("Save Index: " + i + "\nCharacter Name: " + savesUse[i] + "\nLocation: \n");
                     }
                     string saveIndex = inPut.getInput();
+                    if (!(saveIndex.Contains("NEW") || saveIndex.Contains("New") || saveIndex.Contains("nEw") || saveIndex.Contains("NEw") || saveIndex.Contains("neW") || saveIndex.Contains("NeW") || saveIndex.Contains("nEW") || saveIndex.Contains("new")))
+                    {
+                        newGame();
+                        break;
+                    }
+
                     int.TryParse(saveIndex, out saveNumIndex);
                     if (saveNumIndex >= 0 && saveNumIndex < savesUse.Count)
                     {
@@ -72,6 +72,7 @@ namespace ConsoleApplication3
                     {
                         Console.WriteLine("That was not a valid input\nPlease put in a valid save index, or type exit");
                     }
+                    
                 }
             }
             
@@ -89,7 +90,17 @@ namespace ConsoleApplication3
             //Console.ReadKey();
         }
 
-
+        static public void newGame()
+        {
+            roomMap.initItems();
+            roomMap.initMap();
+            Console.WriteLine("Please type your preferred name!\n");
+            playerChar.charname = Console.ReadLine();
+            Console.WriteLine("Hello " + playerChar.charname + "!");
+            playerChar.location = roomMap.startroom;
+            Console.WriteLine("You are in the " + playerChar.location.name + " right now");
+            
+        }
 
 
     }

@@ -97,16 +97,94 @@ namespace ConsoleApplication3
             
         }
 
+        static public void initMapSaved()
+        {
+            room pos = startroom;
+            roomlist.Add(startroom);
+            KeyNotFoundException check = new KeyNotFoundException();            
+            TypeInitializationException thing = new TypeInitializationException("Oh noes!", null);
 
 
-        static public void initmap() {
+            try
+            {
+                using (StreamReader descrip = File.OpenText("room_names&descriptions.txt"))
+                {
+                    string s, S;
+                    while ((s = descrip.ReadLine()) != null && (S = descrip.ReadLine()) != null)
+                    {
+                        pos = new room(s, S);
+                        roomlist.Add(pos);
+                    }
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Trying to initialize the map resulted in failure, please restart the game when \nthis file has been replaced");
+                throw e;
+            }
+
+        }
+
+
+        static public void initMap() {
             room pos = startroom;
             roomlist.Add(startroom);
             Direction randdir;
             Random rand1 = new Random();
             KeyNotFoundException check = new KeyNotFoundException();
             item randItem;
+            TypeInitializationException thing = new TypeInitializationException("Oh noes!", null);
 
+            
+            try
+            {
+                using (StreamReader descrip = File.OpenText("room_names&descriptions.txt"))
+                {
+                    string s, S;
+                    while ((s = descrip.ReadLine()) != null && (S = descrip.ReadLine()) != null )
+                    {
+                        while (true)
+                        {
+                            pos = randroom();
+                            randdir = (Direction)(rand1.Next(0, 3));
+                            if (pos.adjacentRooms[randdir] == null)
+                            {
+                                pos.addfrom(s, S, randdir);
+                                pos = pos.adjacentRooms[randdir];
+                                roomlist.Add(pos);
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    while (true)
+                                    {
+                                        randItem = randRoomItem(rand1);
+                                        if (randItem.used == false)
+                                        {
+                                            pos.roomItemAdd(randItem);
+                                            break;
+                                        }
+                                    }
+                                }
+                                pos = randroom();
+                                break;
+                            }
+                        }
+
+
+
+                    }
+                }
+                
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Trying to initialize the map resulted in failure, please restart the game when \nthis file has been replaced");
+                throw e;
+            }
+
+            /*
             while (true)
             {
                 pos = randroom();
@@ -366,8 +444,9 @@ namespace ConsoleApplication3
                     break;
                 }
             }
-                
-                    
+            */
+
+
         }
 
         private static item randRoomItem(Random rand1)

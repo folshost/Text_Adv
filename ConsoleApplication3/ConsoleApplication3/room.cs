@@ -35,6 +35,12 @@ namespace ConsoleApplication3
         public room() {
         }
 
+        public void add(string r, string n)
+        {
+            room newroom = new room(r, n);
+            newroom.name = n;
+        }
+
         public void addfrom(string r, string n, Direction to)
         {
             room newroom = new room(r,n);

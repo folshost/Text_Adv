@@ -79,8 +79,46 @@ namespace ConsoleApplication3
                 Console.WriteLine("Please do not try to access player stats when the player has not been initialized");
                 return;
             }
-            using ( StreamWriter save = new StreamWriter("saves.dat",true))
+            bool priorExist = true;
+            int numEntry = 0;
+            if (!Directory.Exists("/Saves"))
             {
+
+                Directory.CreateDirectory("Saves");
+                if (!Directory.Exists("/Saves"))
+                    Console.WriteLine("Successfully created directory 'Saves'");
+
+            }
+            if (!File.Exists("/Saves/saves.dat"))
+            {
+                File.Create("/Users/Maxwell/'My Documents'/GitHub/Text_Adv/ConsoleApplication3/bin/Debug/Saves/saves.dat");
+                priorExist = false;
+            }
+
+            if (priorExist == true)
+            {
+                using (StreamReader saves = File.OpenText("saves.dat"))
+                {
+                    string s, S;
+                    while ((s = saves.ReadLine()) != null)
+                    {
+                        S = s.ToUpper();
+                        if (S.Contains("NAME"))
+                        {
+                            numEntry++;
+                        }
+
+
+                    }
+                }
+            }
+
+            using ( StreamWriter save = new StreamWriter("/Saves/saves.dat",true))
+            {
+
+
+                numEntry++;
+                save.WriteLine(numEntry);          
                 save.WriteLine("Name:");
                 save.WriteLine(playerChar.charname);
 
