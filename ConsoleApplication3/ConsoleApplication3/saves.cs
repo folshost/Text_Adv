@@ -16,7 +16,7 @@ namespace ConsoleApplication3
 
             try
             {
-                using (StreamReader saves = File.OpenText("saves.dat"))
+                using (StreamReader saves = File.OpenText("Saves/saves.dat"))
                 {
                     string s,S;
                     while ((s = saves.ReadLine()) != null)
@@ -45,7 +45,7 @@ namespace ConsoleApplication3
 
             try
             {
-                using (StreamReader saves = File.OpenText("saves.dat"))
+                using (StreamReader saves = File.OpenText("Saves/saves.dat"))
                 {
                     string s, S;
                     while ((s = saves.ReadLine()) != null)
@@ -64,7 +64,8 @@ namespace ConsoleApplication3
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine("File 'Saves/saves.dat' could not be opened.");
+                return null;
             }
 
 
@@ -81,23 +82,23 @@ namespace ConsoleApplication3
             }
             bool priorExist = true;
             int numEntry = 0;
-            if (!Directory.Exists("/Saves"))
+            if (!Directory.Exists("Saves"))
             {
 
                 Directory.CreateDirectory("Saves");
-                if (!Directory.Exists("/Saves"))
+                if (!Directory.Exists("Saves"))
                     Console.WriteLine("Successfully created directory 'Saves'");
 
             }
-            if (!File.Exists("/Saves/saves.dat"))
+            if (!File.Exists("Saves/saves.dat"))
             {
-                File.Create("/Users/Maxwell/'My Documents'/GitHub/Text_Adv/ConsoleApplication3/bin/Debug/Saves/saves.dat");
+                File.Create("Saves/saves.dat");
                 priorExist = false;
             }
 
             if (priorExist == true)
             {
-                using (StreamReader saves = File.OpenText("saves.dat"))
+                using (StreamReader saves = File.OpenText("Saves/saves.dat"))
                 {
                     string s, S;
                     while ((s = saves.ReadLine()) != null)
@@ -110,23 +111,126 @@ namespace ConsoleApplication3
 
 
                     }
+                    saves.Close();
                 }
             }
 
-            using ( StreamWriter save = new StreamWriter("/Saves/saves.dat",true))
+            try
             {
 
+                using ( StreamWriter save = new StreamWriter("Saves/saves.dat",true))
+                {
 
-                numEntry++;
-                save.WriteLine(numEntry);          
-                save.WriteLine("Name:");
-                save.WriteLine(playerChar.charname);
+                    bool overWrite;
+                    while (true)
+                    {
+                        Console.WriteLine("Would you like to overwrite this save file or create another file?");
+                        string saveInput = inPut.getInput();
+                        bool good;
+                        bool.TryParse(saveInput, out good);
+                        if(good == true)
+                        {
+                            overWrite = true;
+                            break;
+                        }
+                    }
+                    if (overWrite)
+                    {
+                        save.Close();
+                        using (StreamReader saves = File.OpenText("Saves/saves.dat"))
+                        {
+                            numEntry = -1;
+                            string s, S;
+                            while ((s = saves.ReadLine()) != null)
+                            {
+                                S = s.ToUpper();
+                                if (S.Contains("NAME"))
+                                {
+                                    numEntry++;
+                                }
+                                if(numEntry == playerChar.saveFileIndex)
+                                {
 
-            }
+                                }
+
+                            }
+                            saves.Close();
+                        }
+                    }
+
+                        numEntry++;
+                    save.WriteLine(numEntry);          
+                    save.WriteLine("Name:");
+                    save.WriteLine(playerChar.charname);
+
+                }
 
           
-            Console.WriteLine("Save Successful!");
+                Console.WriteLine("Save Successful!");
+            }
+            catch (System.IO.IOException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Save not successful :c");
+                return;
+            }
         }
+
+        internal static void saveImport(int saveNumIndex)
+        {
+            int numIndex = -1;
+            string bigFilePath = "Path not found";
+            using (StreamReader saves = File.OpenText("Saves/saves.dat"))
+            {
+                string s, S;
+                while ((s = saves.ReadLine()) != null)
+                {
+                    S = s.ToUpper();
+                    if (S.Contains("NAME"))
+                    {
+                        numIndex++;
+                    }
+                    if (numIndex == saveNumIndex)
+                    {
+                        bigFilePath = saves.ReadLine();
+                        break;
+                    }
+
+                }
+                saves.Close();
+                if (bigFilePath == "Path not found")
+                {
+                    Console.WriteLine(bigFilePath);
+                    return;
+                }
+            }
+            string newCharPath = Path.Combine("Saves", bigFilePath, "char.dat");
+            string newItemPath = Path.Combine("Saves", bigFilePath, "item.dat");
+            string newMapPath  = Path.Combine("Saves", bigFilePath, "map.dat");
+            string[] pathArray = { newCharPath, newItemPath, newMapPath };
+            for (int i = 0; i < 3; i++)
+            {
+                try
+                {
+                    using (StreamReader saves = File.OpenText(pathArray[i]))
+                    {
+                        saves.Close();
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+
+
+
+
+        }
+
+        
 
         static public void writer(string mystring)
         {

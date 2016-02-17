@@ -6,6 +6,7 @@ namespace ConsoleApplication3
     {
         static public room location = null;
         static public string charname;
+        static public int saveFileIndex;
         static public List<item> inventory = new List<item>();
 
         static public void move(Direction dir)

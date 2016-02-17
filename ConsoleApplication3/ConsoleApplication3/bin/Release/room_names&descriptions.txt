@@ -1,0 +1,20 @@
+You stand in a magnificent dining room. 
+Dining Room
+You are in a billiard room. Fun.
+Billiard Room
+You are in a small chapel.
+Chapel
+You are standing in a greenhouse.
+Greenhouse
+You see a beautiful garden all around you.
+Garden
+The entrance to a topiary maze confronts you.
+Maze
+You're in a subway stat-wait, nope, it's a kitchen.
+Kitchen
+You're in what looks like someone's bedroom.
+Bedroom
+You are standing in the biggest linen closet you've ever seen.
+Linen Closet
+Phew, you're now in a room full of garbage. Who would purposely put a room like this in their house?
+Trash Room

@@ -48,31 +48,73 @@ namespace ConsoleApplication3
 
                 }
                 List<string> savesUse = saves.savesurvey();
-                int saveNumIndex;
-                while (true)
+                bool useNewGame = false;
+                if (savesUse == null)
                 {
-                    for (int i = 0; i < savesUse.Count; i++)
-                    {
-                        Console.WriteLine("Save Index: " + i + "\nCharacter Name: " + savesUse[i] + "\nLocation: \n");
-                    }
-                    string saveIndex = inPut.getInput();
-                    if (!(saveIndex.Contains("NEW") || saveIndex.Contains("New") || saveIndex.Contains("nEw") || saveIndex.Contains("NEw") || saveIndex.Contains("neW") || saveIndex.Contains("NeW") || saveIndex.Contains("nEW") || saveIndex.Contains("new")))
+                    Console.WriteLine("The save file failed to open.\nPlease restart the game, or start a new game by typing 'new game'.");
+                    string saveException = inPut.getInput();
+                    saveException = saveException.ToUpper();
+                    if (saveException.Contains("NEW") || saveException.Contains("N"))
                     {
                         newGame();
-                        break;
+                        useNewGame = true;
                     }
+                }
 
-                    int.TryParse(saveIndex, out saveNumIndex);
-                    if (saveNumIndex >= 0 && saveNumIndex < savesUse.Count)
-                    {
-                        break;
+                int saveNumIndex;
+                if (!useNewGame)
+                {
 
-                    }
-                    else
+                    while (true)
                     {
-                        Console.WriteLine("That was not a valid input\nPlease put in a valid save index, or type exit");
-                    }
+
+                        if(savesUse != null)
+                        {
+
+                            for (int i = 0; i < savesUse.Count; i++)
+                            {
+                                Console.WriteLine("Save Index: " + i + "\nCharacter Name: " + savesUse[i] + "\nLocation: \n");
+                            }
+                            string saveIndex = inPut.getInput();
+                            if ((saveIndex.Contains("NEW") || saveIndex.Contains("New") || saveIndex.Contains("nEw") || saveIndex.Contains("NEw") || saveIndex.Contains("neW") || saveIndex.Contains("NeW") || saveIndex.Contains("nEW") || saveIndex.Contains("new")))
+                            {
+                                newGame();
+                                break;
+                            }
+
+                            int.TryParse(saveIndex, out saveNumIndex);
+                            if (saveNumIndex >= 0 && saveNumIndex < savesUse.Count)
+                            {
+                                try
+                                {
+                                    saves.saveImport(saveNumIndex);
+
+                                    break;
+
+                                }
+                                catch (Exception)
+                                {
+
+                                    Console.WriteLine("File of save index " + saveNumIndex + " could not be opened");
+                                }
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("That was not a valid input\nPlease put in a valid save index, or type exit");
+                            }
+                        }
+                        else
+                        {
+                            string saveIndex = inPut.getInput();
+                            if ((saveIndex.Contains("NEW") || saveIndex.Contains("New") || saveIndex.Contains("nEw") || saveIndex.Contains("NEw") || saveIndex.Contains("neW") || saveIndex.Contains("NeW") || saveIndex.Contains("nEW") || saveIndex.Contains("new")))
+                            {
+                                newGame();
+                                break;
+                            }
+                        }
                     
+                    }
                 }
             }
             
@@ -94,6 +136,7 @@ namespace ConsoleApplication3
         {
             roomMap.initItems();
             roomMap.initMap();
+            playerChar.saveFileIndex = -1;
             Console.WriteLine("Please type your preferred name!\n");
             playerChar.charname = Console.ReadLine();
             Console.WriteLine("Hello " + playerChar.charname + "!");
