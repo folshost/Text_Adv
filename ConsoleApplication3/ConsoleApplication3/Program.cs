@@ -70,13 +70,24 @@ namespace ConsoleApplication3
 
                         if(savesUse != null)
                         {
-
-                            for (int i = 0; i < savesUse.Count; i++)
+                            int j = 0;
+                            //if(savesUse.Count % 3 == 0)
                             {
-                                Console.WriteLine("Save Index: " + i + "\nCharacter Name: " + savesUse[i] + "\nLocation: \n");
+                                for (int i = 0; i < savesUse.Count/3; i++)
+                                {                             
+                                    Console.WriteLine("\nSave Index: " + i + "\nCharacter Name: \n" + savesUse[3*i] + "\n\nLocation: \n" + savesUse[3*i + 1] + "\n\nTime Saved: \n" + savesUse[3*i+2] + "\n" );                                
+                                }
+
                             }
+                            /*else
+                            {
+                                for (int i = 0; i < (savesUse.Count / 3); i++)
+                                {
+                                    Console.WriteLine("Save Index: " + i + "\nCharacter Name: " + savesUse[3 * i] + "\nLocation: \n" + savesUse[3 * i + 1] + "\nTime Saved: \n" + savesUse[3 * i + 2]);
+                                }
+                            }*/
                             string saveIndex = inPut.getInput();
-                            if ((saveIndex.Contains("NEW") || saveIndex.Contains("New") || saveIndex.Contains("nEw") || saveIndex.Contains("NEw") || saveIndex.Contains("neW") || saveIndex.Contains("NeW") || saveIndex.Contains("nEW") || saveIndex.Contains("new")))
+                            if ((saveIndex.Contains("N") || saveIndex.Contains("n")))
                             {
                                 newGame();
                                 break;
