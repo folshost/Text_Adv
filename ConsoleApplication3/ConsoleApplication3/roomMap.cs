@@ -21,6 +21,49 @@ namespace ConsoleApplication3
             return roomlist[rand2.Next() % roomlist.Count];
         }
 
+        static public void itemsSave()
+        {
+            using(StreamWriter itemSave = new StreamWriter("item_names&descriptions.txt", true))
+            {
+                for (int i = 0; i < itemList.Count; i++)
+                {
+                    itemSave.WriteLine(itemList[i].itemName);
+                    itemSave.WriteLine(itemList[i].itemLoc);
+                }
+            }
+        }
+
+        static public void initItemsImport()
+        {
+            try
+            {
+                using(StreamReader itemsImport = File.OpenText("item_names&descriptions.txt"))
+                {
+                    string s1,s2,s3,S;
+                    int itemLoc;
+                    item pos;
+                    while(((s1 = itemsImport.ReadLine()) != null) && ((s2 = itemsImport.ReadLine()) != null) && ((s3 = itemsImport.ReadLine()) != null))
+                    {
+                        int.TryParse(s2, out itemLoc);
+                        pos = new item(s1, itemLoc, s3);
+                        itemList.Add(pos);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            Random rand1 = new Random();
+            for(int i = 0; i < 2; i++)
+            {
+                int one = rand1.Next()%itemList.Count, two = rand1.Next()%itemList.Count;
+                itemList[one].nestItem = itemList[two];
+                itemList.Remove(itemList[two]);
+            }
+        }
+
         static public void initItems()
         {
             item robotToy = new item("toy robot", 3);

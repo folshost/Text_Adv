@@ -209,7 +209,7 @@ namespace ConsoleApplication3
                     }
                     else
                     {
-                        numEntry++;
+                        //numEntry++;
                         save.WriteLine(numEntry);          
                         save.WriteLine("Name:");
                         save.WriteLine(playerChar.charname);
@@ -221,10 +221,11 @@ namespace ConsoleApplication3
                         
                         using (StreamWriter saveWriteChar = new StreamWriter(charPath))
                         {
+                            saveWriteChar.WriteLine(playerChar.location.name);
                             saveWriteChar.WriteLine("Inventory: ");
                             for (int i = 0; i < playerChar.inventory.Count; i++)
                             {
-                                Console.WriteLine("Uh oh, dat's bad!");
+                                
                                 if(playerChar.inventory[i].nestItem != null)
                                 {
                                     saveWriteChar.WriteLine(playerChar.inventory[i].itemName + " NEST " + playerChar.inventory[i].nestItem.itemName);
@@ -253,6 +254,7 @@ namespace ConsoleApplication3
                                     if(roomMap.roomlist[i].adjacentRooms[d.Key] != null)
                                         saveWriteMap.WriteLine(d.Key + "\t" + roomMap.roomlist[i].adjacentRooms[d.Key].name);
                                 }
+                                saveWriteMap.WriteLine(roomMap.roomlist[i].roomItems.Count);
                                 saveWriteMap.WriteLine("END");
                             }
                             saveWriteMap.Close();
@@ -318,10 +320,13 @@ namespace ConsoleApplication3
                     {
                         numIndex++;
                     }
-                    if (numIndex == saveNumIndex - 1)
+                    if ( numIndex == saveNumIndex)
                     {
-                        saves.ReadLine();
-                        bigFilePath = Path.Combine(saves.ReadLine(),saveNum);
+                        S = saves.ReadLine();
+                        playerChar.charname = S;
+                        bigFilePath = S + saveNum;
+
+                        Console.WriteLine(bigFilePath);
                         break;
                     }
 
@@ -337,21 +342,177 @@ namespace ConsoleApplication3
             string newItemPath = Path.Combine("Saves", bigFilePath, "item.dat");
             string newMapPath  = Path.Combine("Saves", bigFilePath, "map.dat");
             string[] pathArray = { newCharPath, newItemPath, newMapPath };
-            for (int i = 0; i < 3; i++)
+            
+            try
             {
-                try
+                using( StreamReader mapImport = File.OpenText(newMapPath))
                 {
-                    using (StreamReader saves = File.OpenText(pathArray[i]))
+                    roomMap.initMapSaved();
+                    mapImport.ReadLine();
+                    string s, S;
+                    int itemNumeral;
+                    while(( s = mapImport.ReadLine()) != null)
                     {
-                        saves.Close();
+                        for (int i = 0; i < roomMap.roomlist.Count; i++)
+                        {
+                            if (s.Contains(roomMap.roomlist[i].name))
+                            {
+                                for (int j = 0; j < 5; j++)
+                                {
+                                    S = mapImport.ReadLine();
+                                    if (S.Contains("END"))
+                                        break;
+                                    if (S.Contains("NORTH"))
+                                    {
+                                        for (int k = 0; k < roomMap.roomlist.Count; k++)
+                                        {
+                                            if (S.Contains(roomMap.roomlist[k].name))
+                                            {
+                                                roomMap.roomlist[i].adjacentRooms[(Direction)0] = roomMap.roomlist[k];
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else if (S.Contains("EAST"))
+                                    {
+                                        for (int k = 0; k < roomMap.roomlist.Count; k++)
+                                        {
+                                            if (S.Contains(roomMap.roomlist[k].name))
+                                            {
+                                                roomMap.roomlist[i].adjacentRooms[(Direction)1] = roomMap.roomlist[k];
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else if (S.Contains("SOUTH"))
+                                    {
+                                        for (int k = 0; k < roomMap.roomlist.Count; k++)
+                                        {
+                                            if (S.Contains(roomMap.roomlist[k].name))
+                                            {
+                                                roomMap.roomlist[i].adjacentRooms[(Direction)2] = roomMap.roomlist[k];
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else if (S.Contains("WEST"))
+                                    {
+                                        for (int k = 0; k < roomMap.roomlist.Count; k++)
+                                        {
+                                            if (S.Contains(roomMap.roomlist[k].name))
+                                            {
+                                                roomMap.roomlist[i].adjacentRooms[(Direction)3] = roomMap.roomlist[k];
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if( int.TryParse(S, out itemNumeral)) 
+                                            roomMap.roomlist[i].itemNum = itemNumeral;
+                                    }
+                                }
+
+                            }
+                        }
+                        Console.WriteLine("Done with map import!");
+                        mapImport.Close();
                     }
+
                 }
-                catch (Exception)
+
+
+
+                using (StreamReader itemImport = File.OpenText(newItemPath))
+                {
+                    roomMap.initItemsImport();
+                    
+                    string s, S, nestor;
+
+                    itemImport.ReadLine();
+
+                    while ((s = itemImport.ReadLine()) != null)
+                    {
+                        for (int i = 0; i < roomMap.roomlist.Count; i++)
+                        {
+                            if (s.Contains(roomMap.roomlist[i].name))
+                            {
+                                for (int j = 0; j < (roomMap.roomlist[i].itemNum * 2 + 1); j++)
+                                {
+                                    S = itemImport.ReadLine();
+                                    if (S.Contains("END"))
+                                        break;
+
+                                    for (int k = 0; k < roomMap.itemList.Count; k++)
+                                    {
+                                        if (S.Contains(roomMap.itemList[k].itemName))
+                                        {
+                                            roomMap.roomlist[i].roomItems.Add(roomMap.itemList[k]);
+                                            if (S.Contains("NEST"))
+                                            {
+                                                nestor = itemImport.ReadLine();
+                                                for (int f = 0; f < roomMap.itemList.Count; f++)
+                                                {
+                                                    if (nestor.Contains(roomMap.itemList[f].itemName))
+                                                    {
+                                                        roomMap.itemList[k].nestItem = roomMap.itemList[f];
+                                                    }
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    }
+
+
+                                }
+                            }
+                        }
+                    }
+                    Console.WriteLine( "Done with items import!");
+                }
+                using (StreamReader charImport = File.OpenText(newCharPath))
                 {
 
-                    throw;
+                    string charImporterHelp = charImport.ReadLine();
+                    for (int i = 0; i < roomMap.roomlist.Count; i++)
+                    {
+                        if (charImporterHelp.Contains(roomMap.roomlist[i].name))
+                            playerChar.location = roomMap.roomlist[i];
+                    }
+                    charImporterHelp = charImport.ReadLine();
+                    string s, S, nestor;
+
+                    charImport.ReadLine();
+
+                    while ((s = charImport.ReadLine()) != null)
+                    {
+                        
+
+                        for (int j = 0; j < (roomMap.itemList.Count + 1 ); j++)
+                        {
+                            S = charImport.ReadLine();
+                            if (S.Contains("END"))
+                                break;
+
+                            if (S.Contains(roomMap.itemList[j].itemName))
+                                playerChar.inventory.Add(roomMap.itemList[j]);
+
+
+                        }
+                        
+                        
+                    }
                 }
+                Console.WriteLine( "Done with char import!");
             }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+            
+            
 
 
 

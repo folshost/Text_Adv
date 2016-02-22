@@ -22,7 +22,22 @@ namespace ConsoleApplication3
             else return input;
         }
 
-        
+        public static bool isHere(string itemName)
+        {
+            for (int i = 0; i < playerChar.location.roomItems.Count; i++)
+            {
+                if (playerChar.location.roomItems[i].itemName == itemName)
+                    return true;
+            }
+            for (int i = 0; i < playerChar.inventory.Count; i++)
+            {
+                if (playerChar.inventory[i].itemName == itemName)
+                    return true;
+            }
+            return false;
+        }
+
+
 
 
         public static string getInput()
@@ -30,6 +45,42 @@ namespace ConsoleApplication3
             string input = Console.ReadLine();
             Console.WriteLine("");
             input = input.ToUpper();
+            if(input.Contains("AT") && input.Contains("LOOK"))
+            {
+                bool worked = false;
+                for (int i = 0; i < roomMap.itemList.Count; i++)
+                {
+                    
+                    if (input.Contains(roomMap.itemList[i].itemName.ToUpper()) && isHere(roomMap.itemList[i].itemName))
+                    {
+                        Console.WriteLine(roomMap.itemList[i].itemDescrip);
+                        worked = true;
+                    }
+                }
+                if(!worked)
+                    Console.WriteLine("That item is either not here or not in your inventory");
+            }
+            if (input.Contains("IN") && input.Contains("LOOK"))
+            {
+                bool worked = false;
+                for (int i = 0; i < roomMap.itemList.Count; i++)
+                {
+
+                    if (input.Contains(roomMap.itemList[i].itemName.ToUpper()) && isHere(roomMap.itemList[i].itemName))
+                    {
+                        if (roomMap.itemList[i].nestItem == null)
+                        {
+                            Console.WriteLine("There is nothing in the " + roomMap.itemList[i].itemName);
+                            worked = true;
+                            break;
+                        }
+                        Console.WriteLine("There is a " + roomMap.itemList[i].nestItem.itemName + " in the " + roomMap.itemList[i].itemName);
+                        worked = true;
+                    }
+                }
+                if (!worked)
+                    Console.WriteLine("That item is either not here or not in your inventory");
+            }
             if (input == "LOOK")
             {
                 playerChar.look();
@@ -103,6 +154,11 @@ namespace ConsoleApplication3
                         Console.WriteLine("If you don't know how to proceed, type help"); 
                 }
                 return input; */
+            }
+            else if ((input.Contains("TAKE") || input.Contains("GET")) && (input.Contains("FROM") || input.Contains("OUT OF")))
+            {
+                playerChar.pickOut(input);
+                return input;
             }
             else if(input.Contains("TAKE") || input.Contains("GET"))
             {

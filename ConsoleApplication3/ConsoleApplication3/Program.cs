@@ -105,7 +105,7 @@ namespace ConsoleApplication3
                                 }
                                 catch (Exception)
                                 {
-
+                                    
                                     Console.WriteLine("File of save index " + saveNumIndex + " could not be opened");
                                 }
 
@@ -132,7 +132,7 @@ namespace ConsoleApplication3
             while (true)
             {
                 inPut.getInput();
-                if (playerChar.inventory.Count >= 3)
+                if (playerChar.inventory.Count >= 30)
                 {
                     Console.WriteLine("Congratulations! \n\nYou solved The Mystery of the Bleu Dauphin! \nCollect your winnings on your way out and have a nice day! ");
                     Console.ReadKey();
@@ -145,7 +145,8 @@ namespace ConsoleApplication3
 
         static public void newGame()
         {
-            roomMap.initItems();
+            roomMap.initItemsImport();
+            
             roomMap.initMap();
             playerChar.saveFileIndex = -1;
             Console.WriteLine("Please type your preferred name!\n");

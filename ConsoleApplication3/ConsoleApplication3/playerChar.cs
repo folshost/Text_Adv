@@ -39,6 +39,47 @@ namespace ConsoleApplication3
                 Console.WriteLine(" \t A " + inventory[i].itemName);
         }
 
+        static public void pickOut(string itemName)
+        {
+            if (location == null)
+            {
+                Console.WriteLine("Please do not try to access player stats when the player has not been initialized");
+                return;
+            }
+            for (int i = 0; i < location.roomItems.Count; i++)
+            {
+                if(location.roomItems[i].nestItem != null)
+                {
+                    if (itemName.Contains(location.roomItems[i].nestItem.itemName.ToUpper()))
+                    {
+
+                        inventory.Add(location.roomItems[i].nestItem);
+                        Console.WriteLine("You take the " + location.roomItems[i].nestItem.itemName + " out of the " + location.roomItems[i].itemName);
+                        location.roomItems[i].nestItem = null;
+                        return;
+                    }
+
+                }
+
+            }
+            for (int i = 0; i < playerChar.inventory.Count; i++)
+            {
+                if(playerChar.inventory[i].nestItem != null)
+                {
+                    if (itemName.Contains(playerChar.inventory[i].nestItem.itemName.ToUpper()))
+                    {
+                        inventory.Add(playerChar.inventory[i].nestItem);
+                        Console.WriteLine("You take the " + playerChar.inventory[i].nestItem.itemName + " out of the " + playerChar.inventory[i].itemName);
+                        playerChar.inventory[i].nestItem = null;
+                        return;
+                    }
+
+                }
+
+            }
+            Console.WriteLine("That item isn't in anything in either this room or your inventory\n");
+        }
+
         static public void pickUp(string itemName)
         {
             if(location == null)
