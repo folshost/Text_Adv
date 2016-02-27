@@ -341,7 +341,7 @@ namespace ConsoleApplication3
             string newCharPath = Path.Combine("Saves", bigFilePath, "char.dat");
             string newItemPath = Path.Combine("Saves", bigFilePath, "item.dat");
             string newMapPath  = Path.Combine("Saves", bigFilePath, "map.dat");
-            string[] pathArray = { newCharPath, newItemPath, newMapPath };
+            //string[] pathArray = { newCharPath, newItemPath, newMapPath };
             
             try
             {
@@ -416,21 +416,21 @@ namespace ConsoleApplication3
                             }
                         }
                         Console.WriteLine("Done with map import!");
-                        mapImport.Close();
                     }
+                    mapImport.Close();
 
                 }
 
-
+                Console.WriteLine(newItemPath);
 
                 using (StreamReader itemImport = File.OpenText(newItemPath))
                 {
+                    Console.WriteLine("Got past init items import!");
                     roomMap.initItemsImport();
                     
                     string s, S, nestor;
 
                     itemImport.ReadLine();
-
                     while ((s = itemImport.ReadLine()) != null)
                     {
                         for (int i = 0; i < roomMap.roomlist.Count; i++)
@@ -466,37 +466,91 @@ namespace ConsoleApplication3
 
                                 }
                             }
+                            Console.WriteLine("Done with checking some stuff!");
                         }
                     }
                     Console.WriteLine( "Done with items import!");
                 }
+
                 using (StreamReader charImport = File.OpenText(newCharPath))
                 {
-
+                    //Console.WriteLine("Inside charImport");
                     string charImporterHelp = charImport.ReadLine();
                     for (int i = 0; i < roomMap.roomlist.Count; i++)
                     {
                         if (charImporterHelp.Contains(roomMap.roomlist[i].name))
                             playerChar.location = roomMap.roomlist[i];
                     }
-                    charImporterHelp = charImport.ReadLine();
+                    //charImporterHelp = charImport.ReadLine();
                     string s, S, nestor;
 
                     charImport.ReadLine();
 
                     while ((s = charImport.ReadLine()) != null)
                     {
-                        
 
-                        for (int j = 0; j < (roomMap.itemList.Count + 1 ); j++)
+                        //Console.WriteLine(s);
+                        if (s.Contains("NEST"))
                         {
-                            S = charImport.ReadLine();
-                            if (S.Contains("END"))
-                                break;
 
-                            if (S.Contains(roomMap.itemList[j].itemName))
-                                playerChar.inventory.Add(roomMap.itemList[j]);
+                            //Console.WriteLine("It has a nested object");
+                            int firstIndex = s.IndexOf("NEST");
+                            int firstSpaceIndex = s.IndexOf(' ');
 
+                            string nest_parent = s.Substring(0,firstSpaceIndex);
+
+                            for (int k = 0; k < (roomMap.itemList.Count); k++)
+                            {
+                                if (nest_parent.Contains(roomMap.itemList[k].itemName))
+                                {
+
+                                    //Console.WriteLine(roomMap.itemList[k].itemName);
+                                    int inventoryIndexForNestItem = playerChar.inventory.Count;
+                                    playerChar.inventory.Add(roomMap.itemList[k]);
+                                    
+
+                                    string nest_check = s.Substring(firstIndex,s.Length-firstIndex);
+
+                                    for (int j = 0; j < (roomMap.itemList.Count); j++)
+                                    {
+                                        if (nest_check.Contains(roomMap.itemList[j].itemName))
+                                        {
+
+                                            //Console.WriteLine(roomMap.itemList[k].itemName);
+                                            playerChar.inventory[inventoryIndexForNestItem].nestItem = roomMap.itemList[j];                                            
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        }
+                        else
+                        {
+                            for (int j = 0; j < (roomMap.itemList.Count); j++)
+                            {
+
+                                if (s.Contains("END"))
+                                    break;
+
+
+                                if (s.Contains(roomMap.itemList[j].itemName))
+                                {
+                                    playerChar.inventory.Add(roomMap.itemList[j]);
+                                    Console.WriteLine(roomMap.itemList[j].itemName);
+
+                                
+                                    if (s.Contains("NEST"))
+                                    {
+
+                                    }
+                                    break;
+                                }
+
+                                //Console.WriteLine("Inside for-loop j: " + j);
+                                //Console.WriteLine("Here's itemlist.count" + roomMap.itemList.Count);
+                            
+                            }
 
                         }
                         

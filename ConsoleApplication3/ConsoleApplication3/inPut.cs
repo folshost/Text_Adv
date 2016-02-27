@@ -59,6 +59,7 @@ namespace ConsoleApplication3
                 }
                 if(!worked)
                     Console.WriteLine("That item is either not here or not in your inventory");
+                //return input;
             }
             if (input.Contains("IN") && input.Contains("LOOK"))
             {
@@ -80,6 +81,7 @@ namespace ConsoleApplication3
                 }
                 if (!worked)
                     Console.WriteLine("That item is either not here or not in your inventory");
+                return input;
             }
             if (input == "LOOK")
             {
