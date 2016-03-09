@@ -156,7 +156,11 @@ namespace ConsoleApplication3
                     }
                     if (overWrite)
                     {
-
+                        if (File.Exists("Saves/saves_temp.dat"))
+                        {
+                            Console.WriteLine("Inside File.Exists check, before delete");
+                            File.Delete("Saves/saves_temp.dat");
+                        }
                         save.Close();
                         using(StreamReader readTemp = File.OpenText("Saves/saves.dat"))
                         {
@@ -165,15 +169,20 @@ namespace ConsoleApplication3
                                 numEntry = -1;
                                 string s, S;
                                 bool worked = false;
+                                Console.WriteLine("Here's player saveIndex: " + playerChar.saveFileIndex);
                                 while ((s = readTemp.ReadLine()) != null)
                                 {
+                                    
+                                    Console.WriteLine("Here's a thing!" + s);
                                     S = s.ToUpper();
                                     if (S.Contains("NAME"))
                                     {
+                                        Console.WriteLine("Numentry: " + numEntry);
                                         numEntry++;
                                     }
-                                    if(numEntry != playerChar.saveFileIndex)
+                                    if(numEntry != playerChar.saveFileIndex || (worked == true))
                                     {
+                                        Console.WriteLine("Writing non-used line: "+s);
                                         writeTemp.WriteLine(s);
                                     }
                                     else
@@ -182,15 +191,108 @@ namespace ConsoleApplication3
                                         writeTemp.WriteLine(playerChar.charname);
                                         writeTemp.WriteLine(playerChar.location.name);
                                         writeTemp.WriteLine(DateTime.Now.ToString());
+                                        readTemp.ReadLine();
+                                        readTemp.ReadLine();
+                                        readTemp.ReadLine();
                                         worked = true;
                                     }
 
                                 }
                                 if (worked)
                                 {
-                                    Console.WriteLine("File overwrite was successful!");
+                                    try {
+
+                                    string biggerPath = Path.Combine("Saves", playerChar.charname + playerChar.saveFileIndex.ToString());
+                                    
+                                    string charPath = Path.Combine(biggerPath, "char.dat");
+
+                                    using (StreamWriter saveWriteChar = new StreamWriter(charPath))
+                                    {
+                                        saveWriteChar.WriteLine(playerChar.location.name);
+                                        saveWriteChar.WriteLine("Inventory: ");
+                                        for (int i = 0; i < playerChar.inventory.Count; i++)
+                                        {
+
+                                            if (playerChar.inventory[i].nestItem != null)
+                                            {
+                                                saveWriteChar.WriteLine(playerChar.inventory[i].itemName + " NEST " + playerChar.inventory[i].nestItem.itemName);
+
+                                            }
+                                            else
+                                            {
+                                                saveWriteChar.WriteLine(playerChar.inventory[i].itemName);
+                                            }
+
+                                        }
+                                        saveWriteChar.Close();
+                                    }
+                                    string mapPath = Path.Combine(biggerPath, "map.dat");
+
+                                    using (StreamWriter saveWriteMap = new StreamWriter(mapPath))
+                                    {
+                                        saveWriteMap.WriteLine("Rooms: ");
+                                        for (int i = 0; i < roomMap.roomlist.Count; i++)
+                                        {
+
+                                            saveWriteMap.WriteLine(roomMap.roomlist[i].name);
+
+                                            foreach (KeyValuePair<Direction, room> d in roomMap.roomlist[i].adjacentRooms)
+                                            {
+                                                if (roomMap.roomlist[i].adjacentRooms[d.Key] != null)
+                                                    saveWriteMap.WriteLine(d.Key + "\t" + roomMap.roomlist[i].adjacentRooms[d.Key].name);
+                                            }
+                                            saveWriteMap.WriteLine(roomMap.roomlist[i].roomItems.Count);
+                                            saveWriteMap.WriteLine("END");
+                                        }
+                                        saveWriteMap.Close();
+                                    }
+                                    string itemPath = Path.Combine(biggerPath, "item.dat");
+
+                                    using (StreamWriter saveWriteItem = new StreamWriter(itemPath))
+                                    {
+                                        saveWriteItem.WriteLine("Items: ");
+                                        for (int i = 0; i < roomMap.roomlist.Count; i++)
+                                        {
+                                            if (roomMap.roomlist[i].roomItems.Count != 0)
+                                            {
+                                                saveWriteItem.WriteLine(roomMap.roomlist[i].name);
+                                                for (int j = 0; j < roomMap.roomlist[i].roomItems.Count; j++)
+                                                {
+                                                    if (roomMap.roomlist[i].roomItems[j].nestItem != null)
+                                                    {
+                                                        saveWriteItem.WriteLine(roomMap.roomlist[i].roomItems[j].itemName + " NEST " + roomMap.roomlist[i].roomItems[j].nestItem.itemName);
+
+                                                    }
+                                                    else
+                                                    {
+                                                        saveWriteItem.WriteLine(roomMap.roomlist[i].roomItems[j].itemName);
+
+                                                    }
+
+                                                }
+                                                saveWriteItem.WriteLine("END");
+                                            }
+                                        }
+                                        saveWriteItem.Close();
+                                    }
+                                    Console.WriteLine("Save Successful!");
+                                }
+
+                            
+
+
+                        
+            catch (System.IO.IOException e)
+            {
+                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Save not successful :c");
+                return;
+            }
+            Console.WriteLine("File overwrite was successful!");
                                     readTemp.Close();
                                     writeTemp.Close();
+                                    File.Delete("Saves/saves.dat");
                                     File.Move("Saves/saves_temp.dat", "Saves/saves.dat");
                                     
                                 }
@@ -542,9 +644,9 @@ namespace ConsoleApplication3
                                 
                                     if (s.Contains("NEST"))
                                     {
+                                        break;
 
                                     }
-                                    break;
                                 }
 
                                 //Console.WriteLine("Inside for-loop j: " + j);
@@ -558,6 +660,7 @@ namespace ConsoleApplication3
                     }
                 }
                 Console.WriteLine( "Done with char import!");
+                playerChar.saveFileIndex = saveNumIndex;
             }
             catch (Exception)
             {

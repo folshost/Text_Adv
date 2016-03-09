@@ -1,13 +1,10 @@
 Items: 
-Dining Room
-drain plug
-END
 Billiard Room
 China cabinet
 END
 Greenhouse
 fountain cherub
-bedside lamp
+bedside lamp NEST plants
 END
 Bedroom
 flowerbed
@@ -17,5 +14,6 @@ Linen Closet
 pulpit
 END
 Trash Room
-maze map
+maze map NEST drain plug
+bench
 END

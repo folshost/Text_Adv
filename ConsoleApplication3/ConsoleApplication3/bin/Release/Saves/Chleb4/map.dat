@@ -8,7 +8,7 @@ END
 Dining Room
 EAST	Maze
 WEST	Driveway
-1
+0
 END
 Billiard Room
 NORTH	Greenhouse
@@ -50,5 +50,5 @@ WEST	Kitchen
 END
 Trash Room
 WEST	Linen Closet
-1
+2
 END
