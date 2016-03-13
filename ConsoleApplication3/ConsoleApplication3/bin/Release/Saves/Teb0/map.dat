@@ -1,0 +1,54 @@
+Rooms: 
+Driveway
+NORTH	Dining Room
+0
+END
+Dining Room
+NORTH	Greenhouse
+EAST	Billiard Room
+SOUTH	Driveway
+2
+END
+Billiard Room
+NORTH	Garden
+SOUTH	Chapel
+WEST	Dining Room
+2
+END
+Chapel
+NORTH	Billiard Room
+SOUTH	Trash Room
+1
+END
+Greenhouse
+NORTH	Linen Closet
+EAST	Kitchen
+SOUTH	Dining Room
+1
+END
+Garden
+NORTH	Bedroom
+EAST	Maze
+SOUTH	Billiard Room
+1
+END
+Maze
+WEST	Garden
+2
+END
+Kitchen
+WEST	Greenhouse
+2
+END
+Bedroom
+SOUTH	Garden
+1
+END
+Linen Closet
+SOUTH	Greenhouse
+2
+END
+Trash Room
+NORTH	Chapel
+2
+END

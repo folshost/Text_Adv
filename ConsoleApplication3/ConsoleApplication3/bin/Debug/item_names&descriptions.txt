@@ -1,0 +1,66 @@
+toy robot
+3
+A wind up toy robot, kinda looks like Robby the Robot
+maze map
+3
+What appears to be a map to the maze
+China cabinet
+0
+An old, beautiful China cabinet. There is however no China inside.
+dinosaur topiary
+3
+It's a topiary shaped like a dinosaur. Heh, you could say it's a dino topia
+mini pew
+3
+It's a short pew. How does one fit this in one's pocket?
+flowerbed
+3
+A concrete flowerbed. These are heavy
+dining room table
+3
+A walnut table, very old, and fancy
+crystal chandelier
+1
+This chandelier has lots of lead crystal baubles all over it
+billiard table
+3
+A billiard table with a buncha felt
+pulpit
+3
+A pretty standard pulpit. It's made of wood, and angled to hold speaking materials
+plants
+3
+Just general plants, they are green
+flowers
+3
+They are zinnias, you think
+bench
+3
+A wooden bench. Kinda like the mini-pews
+fountain cherub
+3
+You've seen these before, the cherub is tipping a vase, and in the fountain waters comes out of it
+butcher knife
+2
+Good ole butcher knife, good for cutting stuff
+drain plug
+3
+Need to plug a drain? This'll do it
+bedpost knob
+0
+Some headboard or footboard somewhere is missing a knob
+bedside lamp
+3
+A lamp that turns on at a touch.
+bath towel
+0
+Well, now you can say you know where your towel is
+roll of trashbags
+0
+A roll of trashbags. You could store stuff in here
+trap door
+2
+This is a very old trapdoor, set into the floor.
+NIV Bible
+0
+A standard NIV bible

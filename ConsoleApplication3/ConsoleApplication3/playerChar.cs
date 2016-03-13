@@ -114,7 +114,7 @@ namespace ConsoleApplication3
 
             //if(location.itemNum != 0)
                 //Console.WriteLine(location.roomItems[0].itemName + "  " + location.roomItems[1].itemName);
-            for (int i = 0; i < location.itemNum; i++)
+            for (int i = 0; i < location.roomItems.Count; i++)
             { 
                 if (location.roomItems[i].itemLoc == 0)
                     Console.WriteLine("There is a " + location.roomItems[i].itemName + " along the wall here \n");
