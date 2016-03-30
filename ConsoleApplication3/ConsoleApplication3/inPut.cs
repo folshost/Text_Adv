@@ -7,7 +7,7 @@ namespace ConsoleApplication3
 
         public static void help()
         {
-            Console.WriteLine("To move, simply type the word 'go,' then press enter, and then \n type the direction you wish to go in, in either the form \n 'D' or 'Direction' ");
+            Console.WriteLine("Hmm, there are a large number of commands I'd have to write about right now, and I kinda don't want to");
         }
 
         public static string simpleInput()
@@ -37,7 +37,49 @@ namespace ConsoleApplication3
             return false;
         }
 
+        public static bool lookAt(string input)
+        {
+            bool worked = false;
+            for (int i = 0; i < roomMap.itemList.Count; i++)
+            {
 
+                if (input.Contains(roomMap.itemList[i].itemName.ToUpper()) && isHere(roomMap.itemList[i].itemName))
+                {
+                    Console.WriteLine(roomMap.itemList[i].itemDescrip);
+                    worked = true;
+                }
+            }
+            if (!worked)
+                Console.WriteLine("That item is either not here or not in your inventory");
+            return worked;
+
+
+        }
+
+        public static string lookIn(string input)
+        {
+            bool worked = false;
+            for (int i = 0; i < roomMap.itemList.Count; i++)
+            {
+
+                if (input.Contains(roomMap.itemList[i].itemName.ToUpper()) && isHere(roomMap.itemList[i].itemName))
+                {
+                    if (roomMap.itemList[i].nestItem == null)
+                    {
+                        Console.WriteLine("There is nothing in the " + roomMap.itemList[i].itemName);
+                        worked = true;
+                        break;
+                    }
+                    Console.WriteLine("There is a " + roomMap.itemList[i].nestItem.itemName + " in the " + roomMap.itemList[i].itemName);
+                    worked = true;
+                }
+            }
+            if (!worked)
+                Console.WriteLine("That item is either not here or not in your inventory");
+            return input;
+
+
+        }
 
 
         public static string getInput()
@@ -45,48 +87,52 @@ namespace ConsoleApplication3
             string input = Console.ReadLine();
             Console.WriteLine("");
             input = input.ToUpper();
-            if(input.Contains("AT") && input.Contains("LOOK"))
+            if(input.Contains("LOOK"))
             {
-                bool worked = false;
-                for (int i = 0; i < roomMap.itemList.Count; i++)
-                {
-                    
-                    if (input.Contains(roomMap.itemList[i].itemName.ToUpper()) && isHere(roomMap.itemList[i].itemName))
-                    {
-                        Console.WriteLine(roomMap.itemList[i].itemDescrip);
-                        worked = true;
-                    }
-                }
-                if(!worked)
-                    Console.WriteLine("That item is either not here or not in your inventory");
-                //return input;
-            }
-            if (input.Contains("IN") && input.Contains("LOOK"))
-            {
-                bool worked = false;
-                for (int i = 0; i < roomMap.itemList.Count; i++)
-                {
 
-                    if (input.Contains(roomMap.itemList[i].itemName.ToUpper()) && isHere(roomMap.itemList[i].itemName))
+                if(input.Contains("AT") && input.Contains("IN"))
+                {
+                    Console.WriteLine("Did you mean look IN or look AT? Please type your meaning again");
+                    while (true)
                     {
-                        if (roomMap.itemList[i].nestItem == null)
+                        string clarifier = Console.ReadLine();
+                        clarifier = clarifier.ToUpper();
+                        if(clarifier.Contains("AT") ^ clarifier.Contains("IN"))
                         {
-                            Console.WriteLine("There is nothing in the " + roomMap.itemList[i].itemName);
-                            worked = true;
-                            break;
+                            if (clarifier.Contains("AT"))
+                            {
+                                lookAt(input);
+                                return input;
+                            }
+                            else
+                            {
+                                lookIn(input);
+                                return input;
+                            }
                         }
-                        Console.WriteLine("There is a " + roomMap.itemList[i].nestItem.itemName + " in the " + roomMap.itemList[i].itemName);
-                        worked = true;
+                        else
+                        {
+                            Console.WriteLine("Please type either 'in' or 'at'");
+                        }
+
                     }
                 }
-                if (!worked)
-                    Console.WriteLine("That item is either not here or not in your inventory");
-                return input;
-            }
-            if (input == "LOOK")
-            {
-                playerChar.look();
-                return input;
+                if (input.Contains("AT"))
+                {
+                    lookAt(input);
+                    return input;
+
+                }
+                else if (input.Contains("IN") )
+                {
+                    lookIn(input);
+                    return input;
+                }
+                else
+                {                
+                    playerChar.look();
+                    return input;
+                }
             }
             else if (input == "HELP")
             {
@@ -182,9 +228,14 @@ namespace ConsoleApplication3
                 Environment.Exit(0);
                 return input;
             }
+            else
+            {
+                Console.WriteLine("That input was unintelligible, so you do nothing\n");
+                return input;
+            }
            
 
-            else return input;
+            
         }
     }
 }

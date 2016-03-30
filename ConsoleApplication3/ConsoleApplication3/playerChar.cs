@@ -13,6 +13,7 @@ namespace ConsoleApplication3
         {
             location = location.adjacentRooms[dir];
             Console.WriteLine("You go " + dir + " to the " + location.name + "\n");
+            playerChar.look();
         } 
 
         static public bool canGo(Direction D)
@@ -91,6 +92,7 @@ namespace ConsoleApplication3
             {
                 if(itemName.Contains(location.roomItems[i].itemName.ToUpper()))
                 {
+                    Console.WriteLine("You pick up the " + location.roomItems[i].itemName);
                     inventory.Add(location.roomItems[i]);
                     location.roomItems.Remove(location.roomItems[i]);
                     location.itemNum--;
