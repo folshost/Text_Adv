@@ -10,7 +10,67 @@ namespace ConsoleApplication3
     {
         static void Main(string[] args)
         {
+
+            while (true)
+            {
+
+                runGame();
+            }
             
+            //Console.ReadKey();
+        }
+
+        static public void runGame()
+        {
+            startMenu();
+            while (true)
+            {
+                string inputer = inPut.getInput();
+                if (inputer.Contains("MENU"))
+                {
+                    while (true)
+                    {
+                        Console.WriteLine("Are you sure you would like to quit to the menu?");
+                        inputer = inPut.getInput();
+                        if (inputer.Contains("Y"))
+                        {
+                            Console.WriteLine("Would you like to save first?");
+                            inputer = inPut.getInput();
+                            if (inputer.Contains("Y"))
+                            {
+                                saves.save();
+                                return;
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+                        else if(inputer.Contains("N"))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("That input was unintelligible, please reply with either yes or no");
+                        }
+                    }
+                }
+                if (playerChar.inventory.Count >= 30)
+                {
+                    Console.WriteLine("Congratulations! \n\nYou solved The Mystery of the Bleu Dauphin! \nCollect your winnings on your way out and have a nice day! ");
+                    Console.ReadKey();
+                    Environment.Exit(0);
+                }
+
+            }
+
+
+        }
+
+        static public void startMenu()
+        {
+
             Console.WriteLine("Welcome to Flight!\n");
 
             int savesnum = saves.findSaves();
@@ -34,16 +94,16 @@ namespace ConsoleApplication3
                     {
                         Console.WriteLine("That input was not intelligible, please use either a 'y' or 'n'");
                     }
-                }    
+                }
             }
-            else if(savesnum > 0)
+            else if (savesnum > 0)
             {
-                if(savesnum == 1)
+                if (savesnum == 1)
                 {
                     Console.WriteLine("One save file was detected \n\nPlease select the index of the one you would like to use!\nOr, if you would like to start a new game type 'new game'");
 
                 }
-                else{
+                else {
                     Console.WriteLine("There were " + savesnum + "  saves found\n\nPlease select the index of the one you would like to use!\nOr, if you would like to start a new game type 'new game'");
 
                 }
@@ -68,14 +128,14 @@ namespace ConsoleApplication3
                     while (true)
                     {
 
-                        if(savesUse != null)
+                        if (savesUse != null)
                         {
                             int j = 0;
                             //if(savesUse.Count % 3 == 0)
                             {
-                                for (int i = 0; i < savesUse.Count/3; i++)
-                                {                             
-                                    Console.WriteLine("\nSave Index: " + i + "\nCharacter Name: \n" + savesUse[3*i] + "\n\nLocation: \n" + savesUse[3*i + 1] + "\n\nTime Saved: \n" + savesUse[3*i+2] + "\n" );                                
+                                for (int i = 0; i < savesUse.Count / 3; i++)
+                                {
+                                    Console.WriteLine("\nSave Index: " + i + "\nCharacter Name: \n" + savesUse[3 * i] + "\n\nLocation: \n" + savesUse[3 * i + 1] + "\n\nTime Saved: \n" + savesUse[3 * i + 2] + "\n");
                                 }
 
                             }
@@ -105,7 +165,7 @@ namespace ConsoleApplication3
                                 }
                                 catch (Exception)
                                 {
-                                    
+
                                     Console.WriteLine("File of save index " + saveNumIndex + " could not be opened");
                                 }
 
@@ -124,24 +184,13 @@ namespace ConsoleApplication3
                                 break;
                             }
                         }
-                    
+
                     }
                 }
             }
-            
-            while (true)
-            {
-                inPut.getInput();
-                if (playerChar.inventory.Count >= 30)
-                {
-                    Console.WriteLine("Congratulations! \n\nYou solved The Mystery of the Bleu Dauphin! \nCollect your winnings on your way out and have a nice day! ");
-                    Console.ReadKey();
-                    return;
-                }
 
-            }
-            //Console.ReadKey();
         }
+
 
         static public void newGame()
         {

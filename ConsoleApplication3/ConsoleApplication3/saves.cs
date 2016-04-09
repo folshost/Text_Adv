@@ -479,7 +479,7 @@ namespace ConsoleApplication3
 
                         }
                     }
-                    Console.WriteLine("Done with map import!");
+                    //Console.WriteLine("Done with map import!");
                 }
                 mapImport.Close();
 
@@ -495,7 +495,7 @@ namespace ConsoleApplication3
             using (StreamReader itemImport = File.OpenText(newItemPath))
             {
                 roomMap.initItemsImport();
-                Console.WriteLine("Got past init items import!");
+                //Console.WriteLine("Got past init items import!");
 
                 string s, S, nestor;
 
@@ -506,7 +506,7 @@ namespace ConsoleApplication3
                     {
                         if (s.Contains(roomMap.roomlist[i].name))
                         {
-                            Console.WriteLine(roomMap.roomlist[i].name);
+                            //Console.WriteLine(roomMap.roomlist[i].name);
                             for (int j = 0; j < (roomMap.roomlist[i].itemNum + 1); j++)
                             {
                                 S = itemImport.ReadLine();
@@ -515,18 +515,18 @@ namespace ConsoleApplication3
 
                                 if (S.Contains("NEST"))
                                 {
-                                    Console.WriteLine("Got to a nest!");
+                                    //Console.WriteLine("Got to a nest!");
                                     int firstIndex = S.IndexOf("NEST");
                                     int firstSpaceIndex = S.IndexOf(' ');
 
                                     string nest_parent = S.Substring(0, firstIndex);
-                                    Console.WriteLine(nest_parent);
+                                    //Console.WriteLine(nest_parent);
                                     for (int l = 0; l < (roomMap.itemList.Count); l++)
                                     {
                                         if (nest_parent.Contains(roomMap.itemList[l].itemName))
                                         {
 
-                                            Console.WriteLine(roomMap.itemList[l].itemName);
+                                            //Console.WriteLine(roomMap.itemList[l].itemName);
                                             int roomIndexForNestItem = roomMap.roomlist[i].roomItems.Count;
                                             roomMap.roomlist[i].roomItems.Add(roomMap.itemList[l]);
                                                 
@@ -539,7 +539,7 @@ namespace ConsoleApplication3
                                                 if (nest_check.Contains(roomMap.itemList[m].itemName))
                                                 {
 
-                                                    Console.WriteLine(roomMap.itemList[m].itemName);
+                                                    //Console.WriteLine(roomMap.itemList[m].itemName);
                                                     roomMap.roomlist[i].roomItems[roomIndexForNestItem].nestItem = roomMap.itemList[m];
                                                     break;
                                                 }
@@ -568,10 +568,10 @@ namespace ConsoleApplication3
                             }
                             break;
                         }
-                        Console.WriteLine("Done with checking some stuff!");
+                        //Console.WriteLine("Done with checking some stuff!");
                     }
                 }
-                Console.WriteLine("Done with items import!");
+                //Console.WriteLine("Done with items import!");
             }
 
         }
@@ -644,7 +644,7 @@ namespace ConsoleApplication3
                             if (s.Contains(roomMap.itemList[j].itemName))
                             {
                                 playerChar.inventory.Add(roomMap.itemList[j]);
-                                Console.WriteLine(roomMap.itemList[j].itemName);
+                                //Console.WriteLine(roomMap.itemList[j].itemName);
 
 
                                 if (s.Contains("NEST"))
@@ -689,7 +689,7 @@ namespace ConsoleApplication3
                         playerChar.charname = S;
                         bigFilePath = S + saveNum;
 
-                        Console.WriteLine(bigFilePath);
+                        //Console.WriteLine(bigFilePath);
                         break;
                     }
 
@@ -697,7 +697,7 @@ namespace ConsoleApplication3
                 saves.Close();
                 if (bigFilePath == "Path not found")
                 {
-                    Console.WriteLine(bigFilePath);
+                    //Console.WriteLine(bigFilePath);
                     return;
                 }
             }
@@ -710,13 +710,15 @@ namespace ConsoleApplication3
             {
                 mapImport(newMapPath);
 
-                Console.WriteLine(newItemPath);
+                //Console.WriteLine(newItemPath);
 
                 itemImport(newItemPath);
                 charImport(newCharPath);
                                 
-                Console.WriteLine( "Done with char import!");
+                //Console.WriteLine( "Done with char import!");
                 playerChar.saveFileIndex = saveNumIndex;
+                Console.WriteLine("File Loaded Successfully!\n");
+                playerChar.look();
             }
             catch (Exception)
             {                

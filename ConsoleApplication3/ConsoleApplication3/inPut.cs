@@ -45,7 +45,7 @@ namespace ConsoleApplication3
 
                 if (input.Contains(roomMap.itemList[i].itemName.ToUpper()) && isHere(roomMap.itemList[i].itemName))
                 {
-                    Console.WriteLine(roomMap.itemList[i].itemDescrip);
+                    Console.WriteLine(roomMap.itemList[i].itemDescrip + "\n");
                     worked = true;
                 }
             }
@@ -66,16 +66,16 @@ namespace ConsoleApplication3
                 {
                     if (roomMap.itemList[i].nestItem == null)
                     {
-                        Console.WriteLine("There is nothing in the " + roomMap.itemList[i].itemName);
+                        Console.WriteLine("There is nothing in the " + roomMap.itemList[i].itemName + "\n");
                         worked = true;
                         break;
                     }
-                    Console.WriteLine("There is a " + roomMap.itemList[i].nestItem.itemName + " in the " + roomMap.itemList[i].itemName);
+                    Console.WriteLine("There is a " + roomMap.itemList[i].nestItem.itemName + " in the " + roomMap.itemList[i].itemName + "\n");
                     worked = true;
                 }
             }
             if (!worked)
-                Console.WriteLine("That item is either not here or not in your inventory");
+                Console.WriteLine("That item is either not here or not in your inventory\n");
             return input;
 
 
@@ -87,12 +87,21 @@ namespace ConsoleApplication3
             string input = Console.ReadLine();
             Console.WriteLine("");
             input = input.ToUpper();
-            if(input.Contains("LOOK"))
+            if(input.Contains("PRINT ITEM LIST"))
+            {
+                roomMap.printItems();
+                return input;
+            }
+            else if (input.Contains("MENU"))
+            {
+                return input;
+            }
+            else if(input.Contains("LOOK"))
             {
 
                 if(input.Contains("AT") && input.Contains("IN"))
                 {
-                    Console.WriteLine("Did you mean look IN or look AT? Please type your meaning again");
+                    Console.WriteLine("Did you mean look IN or look AT? Please type your meaning again\n");
                     while (true)
                     {
                         string clarifier = Console.ReadLine();
@@ -112,7 +121,7 @@ namespace ConsoleApplication3
                         }
                         else
                         {
-                            Console.WriteLine("Please type either 'in' or 'at'");
+                            Console.WriteLine("Please type either 'in' or 'at'\n");
                         }
 
                     }

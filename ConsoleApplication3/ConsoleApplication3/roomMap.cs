@@ -15,6 +15,15 @@ namespace ConsoleApplication3
 
         static public List<item> itemList = new List<item>();
 
+
+        static public void printItems()
+        {
+            for(int i = 0; i < itemList.Count; i++)
+            {
+                itemList[i].print();
+            }
+        }
+
         static public room randroom()
         {
             Random rand2 = new Random();

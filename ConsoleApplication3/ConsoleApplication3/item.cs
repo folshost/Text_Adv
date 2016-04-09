@@ -1,4 +1,6 @@
-﻿namespace ConsoleApplication3
+﻿using System;
+
+namespace ConsoleApplication3
 {
     public class item
     {
@@ -39,5 +41,16 @@
             itemLoc  = loc;
         }
 
+
+        public void print()
+        {
+            Console.WriteLine(itemName + "\n" + itemDescrip + "\n");
+            if (nestItem != null)
+            {
+                Console.WriteLine("Nest Item for" + itemName);
+                nestItem.print();
+                Console.WriteLine("\n");
+            }
+        }
     }
 }

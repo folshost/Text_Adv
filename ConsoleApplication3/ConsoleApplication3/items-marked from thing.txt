@@ -1,0 +1,41 @@
+Items: 
+Dining Room
+fountain cherub X
+bedside lamp X
+END
+Billiard Room
+butcher knife X
+NIV Bible NEST mini pew X
+END
+Chapel
+dining room table Z
+bedpost knob X
+END
+Greenhouse
+bench X
+dinosaur topiary X
+END
+Garden
+pulpit X
+trap door X
+END
+Maze
+drain plug X
+crystal chandelier X
+END
+Kitchen
+plants X
+China cabinet X
+END
+Bedroom
+flowers X
+toy robot X
+END
+Linen Closet
+maze map NEST bath towel X
+billiard table X
+END
+Trash Room
+flowerbed X
+roll of trashbags X
+END
