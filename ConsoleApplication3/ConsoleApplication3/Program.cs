@@ -10,7 +10,8 @@ namespace ConsoleApplication3
     {
         static void Main(string[] args)
         {
-
+            //roomMap.initMapSaved();
+            //roomMap.initItemsImport();
             while (true)
             {
 
@@ -30,19 +31,23 @@ namespace ConsoleApplication3
                 {
                     while (true)
                     {
-                        Console.WriteLine("Are you sure you would like to quit to the menu?");
+                        Console.WriteLine("Are you sure you would like to quit to the menu?\n");
                         inputer = inPut.getInput();
                         if (inputer.Contains("Y"))
                         {
-                            Console.WriteLine("Would you like to save first?");
+                            Console.WriteLine("Would you like to save first?\n");
                             inputer = inPut.getInput();
                             if (inputer.Contains("Y"))
                             {
                                 saves.save();
+                                roomMap.itemList.RemoveRange(0, roomMap.itemList.Count );
+                                roomMap.roomlist.RemoveRange(0, roomMap.roomlist.Count );
                                 return;
                             }
                             else
                             {
+                                roomMap.itemList.RemoveRange(0, roomMap.itemList.Count );
+                                roomMap.roomlist.RemoveRange(0, roomMap.roomlist.Count );
                                 return;
                             }
                         }
@@ -163,9 +168,10 @@ namespace ConsoleApplication3
                                     break;
 
                                 }
-                                catch (Exception)
+                                catch (Exception e)
                                 {
-
+                                    Console.WriteLine(e.Message);
+                                    Console.WriteLine(e.StackTrace);
                                     Console.WriteLine("File of save index " + saveNumIndex + " could not be opened");
                                 }
 

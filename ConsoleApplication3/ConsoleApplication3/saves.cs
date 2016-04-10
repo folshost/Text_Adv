@@ -414,18 +414,30 @@ namespace ConsoleApplication3
                 roomMap.initMapSaved();
                 mapImport.ReadLine();
                 string s, S;
+                for (int i = 0; i < roomMap.roomlist.Count; i++)
+                {
+                    //Console.WriteLine(roomMap.roomlist[i].name);
+                }
                 int itemNumeral;
                 while ((s = mapImport.ReadLine()) != null)
                 {
+                    //Console.WriteLine("s: " + s);
                     for (int i = 0; i < roomMap.roomlist.Count; i++)
                     {
+                        //Console.WriteLine(roomMap.roomlist[i].name + " s:" + s);
                         if (s.Contains(roomMap.roomlist[i].name))
                         {
                             for (int j = 0; j < 5; j++)
                             {
                                 S = mapImport.ReadLine();
+                                //Console.WriteLine(S + " s: " + s);
                                 if (S.Contains("END"))
+                                {
+                                    //Console.WriteLine("It said END!");
+                                    //Console.WriteLine(roomMap.roomlist[i].adjacentRooms.ToString());
                                     break;
+
+                                }
                                 if (S.Contains("NORTH"))
                                 {
                                     for (int k = 0; k < roomMap.roomlist.Count; k++)
@@ -494,9 +506,9 @@ namespace ConsoleApplication3
 
             using (StreamReader itemImport = File.OpenText(newItemPath))
             {
-                roomMap.initItemsImport();
-                //Console.WriteLine("Got past init items import!");
 
+                //Console.WriteLine("Got past init items import!");
+                roomMap.initItemsImport();
                 string s, S, nestor;
 
                 itemImport.ReadLine();
