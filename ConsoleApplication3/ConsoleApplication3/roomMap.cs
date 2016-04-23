@@ -20,7 +20,7 @@ namespace ConsoleApplication3
         {
             for(int i = 0; i < itemList.Count; i++)
             {
-                itemList[i].print();
+                Console.WriteLine(itemList[i].print() + '\n');
             }
         }
 

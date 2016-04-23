@@ -42,12 +42,14 @@ namespace ConsoleApplication3
                                 saves.save();
                                 roomMap.itemList.RemoveRange(0, roomMap.itemList.Count );
                                 roomMap.roomlist.RemoveRange(0, roomMap.roomlist.Count );
+                                playerChar.inventory.RemoveRange(0, playerChar.inventory.Count);
                                 return;
                             }
                             else
                             {
                                 roomMap.itemList.RemoveRange(0, roomMap.itemList.Count );
                                 roomMap.roomlist.RemoveRange(0, roomMap.roomlist.Count );
+                                playerChar.inventory.RemoveRange(0, playerChar.inventory.Count);
                                 return;
                             }
                         }

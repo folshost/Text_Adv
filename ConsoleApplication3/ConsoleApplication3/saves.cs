@@ -130,7 +130,7 @@ namespace ConsoleApplication3
                     {
                         while (true)
                         {
-                            Console.WriteLine("Would you like to overwrite this save file or create another file?");
+                            Console.WriteLine("Would you like to overwrite this save file or create another file?\n");
                             string saveInput = inPut.getInput();
                             saveInput = saveInput.ToUpper();
                             if(saveInput.Contains("Y"))
@@ -158,7 +158,7 @@ namespace ConsoleApplication3
                     {
                         if (File.Exists("Saves/saves_temp.dat"))
                         {
-                            Console.WriteLine("Inside File.Exists check, before delete");
+                            //Console.WriteLine("Inside File.Exists check, before delete");
                             File.Delete("Saves/saves_temp.dat");
                         }
                         save.Close();
@@ -169,20 +169,20 @@ namespace ConsoleApplication3
                                 numEntry = -1;
                                 string s, S;
                                 bool worked = false;
-                                Console.WriteLine("Here's player saveIndex: " + playerChar.saveFileIndex);
+                                //Console.WriteLine("Here's player saveIndex: " + playerChar.saveFileIndex);
                                 while ((s = readTemp.ReadLine()) != null)
                                 {
                                     
-                                    Console.WriteLine("Here's a thing!" + s);
+                                    //Console.WriteLine("Here's a thing!" + s);
                                     S = s.ToUpper();
                                     if (S.Contains("NAME"))
                                     {
-                                        Console.WriteLine("Numentry: " + numEntry);
+                                        //Console.WriteLine("Numentry: " + numEntry);
                                         numEntry++;
                                     }
                                     if(numEntry != playerChar.saveFileIndex || (worked == true))
                                     {
-                                        Console.WriteLine("Writing non-used line: "+s);
+                                        //Console.WriteLine("Writing non-used line: "+s);
                                         writeTemp.WriteLine(s);
                                     }
                                     else
@@ -258,8 +258,11 @@ namespace ConsoleApplication3
                                                 saveWriteItem.WriteLine(roomMap.roomlist[i].name);
                                                 for (int j = 0; j < roomMap.roomlist[i].roomItems.Count; j++)
                                                 {
+                                                        saveWriteItem.WriteLine(roomMap.roomlist[i].roomItems[j].print());
+                                                    /*
                                                     if (roomMap.roomlist[i].roomItems[j].nestItem != null)
                                                     {
+                                                            Console.WriteLine(roomMap.roomlist[i].roomItems[j].nestItem.itemName + " Haha");
                                                         saveWriteItem.WriteLine(roomMap.roomlist[i].roomItems[j].itemName + " NEST " + roomMap.roomlist[i].roomItems[j].nestItem.itemName);
 
                                                     }
@@ -267,7 +270,7 @@ namespace ConsoleApplication3
                                                     {
                                                         saveWriteItem.WriteLine(roomMap.roomlist[i].roomItems[j].itemName);
 
-                                                    }
+                                                    }*/
 
                                                 }
                                                 saveWriteItem.WriteLine("END");
@@ -373,7 +376,9 @@ namespace ConsoleApplication3
                                     saveWriteItem.WriteLine(roomMap.roomlist[i].name);
                                     for (int j = 0; j < roomMap.roomlist[i].roomItems.Count; j++)
                                     {
-                                        if(roomMap.roomlist[i].roomItems[j].nestItem != null)
+                                        saveWriteItem.WriteLine(roomMap.roomlist[i].roomItems[j].print());
+                                        /*
+                                        if (roomMap.roomlist[i].roomItems[j].nestItem != null)
                                         {
                                             saveWriteItem.WriteLine(roomMap.roomlist[i].roomItems[j].itemName + " NEST " + roomMap.roomlist[i].roomItems[j].nestItem.itemName);
 
@@ -383,6 +388,7 @@ namespace ConsoleApplication3
                                             saveWriteItem.WriteLine(roomMap.roomlist[i].roomItems[j].itemName);
 
                                         }
+                                        */
 
                                     }
                                     saveWriteItem.WriteLine("END");
@@ -508,10 +514,11 @@ namespace ConsoleApplication3
             {
 
                 //Console.WriteLine("Got past init items import!");
-                roomMap.initItemsImport();
+                
                 string s, S, nestor;
 
                 itemImport.ReadLine();
+                item pos;
                 while ((s = itemImport.ReadLine()) != null)
                 {
                     for (int i = 0; i < roomMap.roomlist.Count; i++)
@@ -525,6 +532,10 @@ namespace ConsoleApplication3
                                 if (S.Contains("END"))
                                     break;
 
+                                pos = new item(S);
+                                roomMap.itemList.Add(pos);
+                                roomMap.roomlist[i].roomItems.Add(pos);
+                                /*
                                 if (S.Contains("NEST"))
                                 {
                                     //Console.WriteLine("Got to a nest!");
@@ -572,7 +583,7 @@ namespace ConsoleApplication3
                                     }
                                     
                                 }
-                                
+                                */
                                     
                                 
 

@@ -41,16 +41,36 @@ namespace ConsoleApplication3
             itemLoc  = loc;
         }
 
-
-        public void print()
+        public item(string itemThing)
         {
-            Console.WriteLine(itemName + "\n" + itemDescrip + "\n");
+            int i;
+            int Index1 = itemThing.IndexOf('#');
+            int Index2 = itemThing.IndexOf('%');
+            itemName = itemThing.Substring(Index1+1, Index2 - Index1 - 1);
+            //Console.WriteLine(itemName);            
+            Index1 = itemThing.IndexOf('#',Index2);
+            itemDescrip = itemThing.Substring(Index2+1, Index1 - Index2 - 1);
+            //Console.WriteLine(itemDescrip);
+            Index2 = itemThing.IndexOf('%', Index1);
+            int.TryParse(itemThing.Substring(Index1, Index2 - Index1),out itemLoc);
+            //Console.WriteLine(itemLoc);
+            if ( itemThing.IndexOf('#', Index2) != -1)
+            {
+                //Console.WriteLine("Found a nest!");
+                nestItem = new item(itemThing.Substring(Index2 + 1));
+            }
+        }
+
+        public string print()
+        {
+            string combine;
+            combine = "#" + itemName + "%" + itemDescrip + "#" + itemLoc + "%";
+
             if (nestItem != null)
             {
-                Console.WriteLine("Nest Item for" + itemName);
-                nestItem.print();
-                Console.WriteLine("\n");
+                combine = combine + nestItem.print();
             }
+            return combine;
         }
     }
 }
