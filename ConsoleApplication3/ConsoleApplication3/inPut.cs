@@ -92,6 +92,11 @@ namespace ConsoleApplication3
                 roomMap.printItems();
                 return input;
             }
+            else if(input.Contains("PRINT ROOM"))
+            {
+                Console.WriteLine(playerChar.location.print());
+                return input;
+            }
             else if (input.Contains("MENU"))
             {
                 return input;
